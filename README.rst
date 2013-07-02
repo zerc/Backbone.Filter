@@ -8,3 +8,4 @@ Contains abstract views, models and some shortcuts for minimize boilerplate code
 * Add more filtering rules in `data-filter` attribute
 * Add multiple filtering
 * Save filter params in urls hash
+* Make more user friendly examples page
