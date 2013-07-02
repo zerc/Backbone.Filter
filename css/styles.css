@@ -82,18 +82,44 @@ blockquote span{font-size:0.7em;display:block;}
 blockquote.small{font-size:1.2em;}
 
 
-.content {
-    text-align:center;
-    padding:10px;
-}
 
-.controls {
-    margin-bottom:10px;
-}
 
 .item {
     display:inline-block;
     padding:5px;
     background:#ccc;
     margin:5px;
+}
+
+.zoo {
+    max-width: 780px;
+    border: 1px solid #ccc;
+}
+
+.zoo .header {
+    height: 30px;
+    background: rgb(223, 223, 223);
+    padding: 5px;
+    font-weight: bolder;
+}
+
+.zoo .controls a {
+    background:#ccc;
+    border-radius:5px;
+    padding:4px;
+    color:#3D3D3D;
+}
+
+.zoo .controls a.active {
+    background:red;
+}
+
+.zoo .controls {
+    padding:5px;
+    margin:10px 0;
+}
+
+.zoo .reset {
+    float:right;
+    margin-right:10px;
 }

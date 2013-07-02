@@ -9,13 +9,19 @@
 </head>
 <body>
     <h1>Examples of Backbone.Filter module</h1>
+    <p>
+        See small example of Zoo site:
+    </p>
 
-    <div class="content">
+    <div class="zoo">
+        <div class="header">Zoo</div>
+
         <div class="controls">
-            <a href="#" data-filter="title:title1">show title1</a>
-            <a href="#" data-filter="title:title2">show title2</a>
-            <a href="#" data-filter="title:title5">show title5</a>
-            <a href="#" data-filter="reset">reset</a>
+            Show me
+            <a href="#" data-filter="animal_type:cat">Cats</a> or
+            <a href="#" data-filter="animal_type:dog">Dogs</a> or
+            <a href="#" data-filter="animal_type:snake">Snakes</a>.
+            <a href="#" data-filter="reset" class="reset">reset</a>
         </div>
 
         <div class="items"></div>
@@ -23,19 +29,23 @@
 
     <script type="text/javascript">
         (function () {
-            var items, ItemModel, Items, itemView, filter;
+            var animals, ItemModel, Animals, itemView, filter;
 
-            items = [
-                {id:1, title:'title1'},
-                {id:2, title:'title2'},
-                {id:3, title:'title3'},
-                {id:4, title:'title2'},
-                {id:5, title:'title5'},
+            animals = [
+                {id:1, animal_type: 'cat', title:'Black cat'},
+                {id:2, animal_type: 'cat', title:'Green cat'},
+                {id:3, animal_type: 'cat', title:'Kity'},
+                {id:4, animal_type: 'cat', title:'Snow cat'},
+                {id:5, animal_type: 'dog', title:'Big dog'},
+                {id:6, animal_type: 'dog', title:'Small dog'},
+                {id:7, animal_type: 'dog', title:'Medium dog'},
+                {id:8, animal_type: 'snake', title:'Simple snake'},
+                {id:9, animal_type: 'snake', title:'Python'}
             ];
 
             ItemModel = Backbone.Model.extend({});
 
-            Items = Backbone.Collection.extend({
+            Animals = Backbone.Collection.extend({
                 model: ItemModel
             });
 
@@ -44,7 +54,7 @@
                 tagName: 'div',
 
                 render: function () {
-                    this.$el.html('id:' + this.model.get('id') + ' , title:' + this.model.get('title'));
+                    this.$el.html(this.model.get('title'));
                     return this;
                 }
             });
@@ -52,7 +62,7 @@
             filter = new Backbone.Filter({
                 control_el      : $('div.controls'),
                 collection_el   : $('div.items'),
-                collection      : new Items(items),
+                collection      : new Animals(animals),
                 itemView        : itemView
             });            
         }());
