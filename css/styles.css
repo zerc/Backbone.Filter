@@ -103,18 +103,20 @@ blockquote.small{font-size:1.2em;}
     font-weight: bolder;
 }
 
-.zoo .controls a {
+.zoo .controls a,
+.zoo .controls_two a {
     background:#ccc;
     border-radius:5px;
     padding:4px;
     color:#3D3D3D;
 }
 
-.zoo .controls a.active {
+.zoo a.active {
     background:red;
 }
 
-.zoo .controls {
+.zoo .controls,
+.zoo .controls_two {
     padding:5px;
     margin:10px 0;
 }

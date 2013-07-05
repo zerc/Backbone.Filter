@@ -16,55 +16,62 @@
     <div class="zoo">
         <div class="header">Zoo</div>
 
-        <div class="controls">
-            Show me
+        <div id="controls" class="controls">
+            Show me           
+            <a href="#" data-filter="size:big">Big</a> or
+            <a href="#" data-filter="size:small">Small</a> or
             <a href="#" data-filter="animal_type:cat">Cats</a> or
-            <a href="#" data-filter="animal_type:dog">Dogs</a> or
-            <a href="#" data-filter="animal_type:snake">Snakes</a>.
+            <a href="#" data-filter="animal_type:dog">Dogs</a>.
             <a href="#" data-filter="reset" class="reset">reset</a>
         </div>
 
-        <div class="items"></div>
+        <div id="items" class="items"></div>
+
     </div>
 
     <script type="text/javascript">
         (function () {
-            var animals, ItemModel, Animals, itemView, filter;
+            var animals, 
+                AnimalModel, AnimalView, Animals,
+                simple_filter, multiple_filter;
 
             animals = [
-                {id:1, animal_type: 'cat', title:'Black cat'},
-                {id:2, animal_type: 'cat', title:'Green cat'},
-                {id:3, animal_type: 'cat', title:'Kity'},
-                {id:4, animal_type: 'cat', title:'Snow cat'},
-                {id:5, animal_type: 'dog', title:'Big dog'},
-                {id:6, animal_type: 'dog', title:'Small dog'},
-                {id:7, animal_type: 'dog', title:'Medium dog'},
-                {id:8, animal_type: 'snake', title:'Simple snake'},
-                {id:9, animal_type: 'snake', title:'Python'}
+                {id:1, animal_type: 'cat', size: 'big',   name: 'Marta'},
+                {id:2, animal_type: 'cat', size: 'small', name: 'Neliya'},
+                {id:3, animal_type: 'cat', size: 'small', name: 'Marusya'},
+                {id:4, animal_type: 'dog', size: 'small', name: 'Beem'},
+                {id:5, animal_type: 'dog', size: 'big',   name: 'Boom'},
+                {id:6, animal_type: 'dog', size: 'big',   name: 'Perl'}
             ];
 
-            ItemModel = Backbone.Model.extend({});
-
-            Animals = Backbone.Collection.extend({
-                model: ItemModel
+            AnimalModel = Backbone.Model.extend({
+                as_html: function () {
+                    return _.template('<%= animal_type %><br><%= size %> <%= name %>', this.toJSON())
+                }
             });
 
-            itemView = Backbone.View.extend({
+            Animals = Backbone.Collection.extend({
+                model: AnimalModel
+            });
+
+            AnimalView = Backbone.View.extend({
                 className: 'item',
                 tagName: 'div',
 
                 render: function () {
-                    this.$el.html(this.model.get('title'));
+                    this.$el.html(this.model.as_html());
                     return this;
                 }
             });
 
             filter = new Backbone.Filter({
-                control_el      : $('div.controls'),
-                collection_el   : $('div.items'),
+                match_any       : false,
+                single_select   : false,
+                control_el      : $('#controls'),
+                collection_el   : $('#items'),
                 collection      : new Animals(animals),
-                itemView        : itemView
-            });            
+                itemView        : AnimalView
+            });
         }());
     </script>
 </body>
