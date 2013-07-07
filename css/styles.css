@@ -2,7 +2,9 @@
 * {
     -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
     -moz-box-sizing: border-box;    /* Firefox, other Gecko */
-    box-sizing: border-box;         /* Opera/IE 8+ */   
+    box-sizing: border-box;         /* Opera/IE 8+ */  
+    font: 13px Helvetica, arial, freesans, clean, sans-serif;
+    line-height: 1.4; 
 }
 
 a {color:#4D99E0; outline:0;}
@@ -69,6 +71,16 @@ p {
     margin:10px 0;
 }
 
+code {
+    margin: 0 2px;
+    padding: 0px 5px;
+    border: 1px solid #DDD;
+    background-color: #F8F8F8;
+    border-radius: 3px;
+    font-family: Consolas, "Liberation Mono", Courier, monospace;
+    font-size: 12px;
+}
+
 blockquote {
     font-size:1.5em;
     line-height:1.5em;
@@ -82,46 +94,72 @@ blockquote span{font-size:0.7em;display:block;}
 blockquote.small{font-size:1.2em;}
 
 
+.items {
+    margin-top:10px;
+}
 
+.controls {
+    width:400px;
+}
+
+.controls a {
+    background-color:#fff;
+    padding:3px;
+    border-radius:3px;
+    text-decoration:none;
+}
+
+.controls a.active {
+    background-color:red;
+    color:#fff;
+    font-weight:normal;
+}
+
+.reset {
+    margin-top:-3px;
+    float:right;
+}
 
 .item {
     display:inline-block;
-    padding:5px;
     background:#ccc;
     margin:5px;
+    text-align:center;
+    width:60px;
+    line-height:60px;
 }
 
-.zoo {
-    max-width: 780px;
-    border: 1px solid #ccc;
+.circle {
+    border-radius:60px;
 }
 
-.zoo .header {
-    height: 30px;
-    background: rgb(223, 223, 223);
-    padding: 5px;
-    font-weight: bolder;
+.square {}
+
+.small {
+    width:45px;
+    line-height:45px;
 }
 
-.zoo .controls a,
-.zoo .controls_two a {
-    background:#ccc;
-    border-radius:5px;
-    padding:4px;
-    color:#3D3D3D;
+
+.red {
+    color:#E2E2E2;
+    background-color:red;
 }
 
-.zoo a.active {
-    background:red;
+.green {
+    color:#E2E2E2;
+    background-color:green
 }
 
-.zoo .controls,
-.zoo .controls_two {
-    padding:5px;
-    margin:10px 0;
+.blue {
+    color:#E2E2E2;
+    background-color:blue;
 }
 
-.zoo .reset {
-    float:right;
-    margin-right:10px;
+.yellow {
+    background-color:yellow;
+}
+
+.orange {
+    background-color:orange;
 }

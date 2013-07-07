@@ -9,68 +9,121 @@
 </head>
 <body>
     <h1>Examples of Backbone.Filter module</h1>
-    <p>
-        See small example of Zoo site:
-    </p>
+    <p>Using multiple filtering with <code>_.any</code> underscore function for compare:</p>
+    <blockquote>
+        <div class="example_one">
+            <div id="controls" class="controls">
+                Show me           
+                <a href="#" data-filter="item_class:circle">Circles</a> or
+                <a href="#" data-filter="item_class:square">Square</a> or
+                <a href="#" data-filter="size:big">Big</a> or
+                <a href="#" data-filter="size:small">Small</a>.
+                <a href="#" data-filter="reset" class="reset">reset</a>
+            </div>
 
-    <div class="zoo">
-        <div class="header">Zoo</div>
+            <div id="items" class="items"></div>
 
-        <div id="controls" class="controls">
-            Show me           
-            <a href="#" data-filter="size:big">Big</a> or
-            <a href="#" data-filter="size:small">Small</a> or
-            <a href="#" data-filter="animal_type:cat">Cats</a> or
-            <a href="#" data-filter="animal_type:dog">Dogs</a>.
-            <a href="#" data-filter="reset" class="reset">reset</a>
         </div>
+    </blockquote>
 
-        <div id="items" class="items"></div>
+    <p>Same with <code>_.all</code> function:</p>
+    <blockquote>
+        <div class="example_one">
+            <div id="controls_two" class="controls">
+                Show me           
+                <a href="#" data-filter="item_class:circle">Circles</a> and
+                <a href="#" data-filter="item_class:square">Square</a> and
+                <a href="#" data-filter="size:big">Big</a> and
+                <a href="#" data-filter="size:small">Small</a>.
+                <a href="#" data-filter="reset" class="reset">reset</a>
+            </div>
 
-    </div>
+            <div id="items_two" class="items"></div>
+
+        </div>
+    </blockquote>
+
+    <p>Single select filter:</p>
+    <blockquote>
+        <div class="example_one">
+            <div id="controls_three" class="controls">
+                Show me           
+                <a href="#" data-filter="item_class:circle">Circles</a>,  
+                <a href="#" data-filter="item_class:square">Square</a>, 
+                <a href="#" data-filter="size:big">Big</a>, 
+                <a href="#" data-filter="size:small">Small</a>.
+                <a href="#" data-filter="reset" class="reset">reset</a>
+            </div>
+
+            <div id="items_three" class="items"></div>
+
+        </div>
+    </blockquote>
+
+    <p>See page source for code ;D</p>
 
     <script type="text/javascript">
         (function () {
-            var animals, 
-                AnimalModel, AnimalView, Animals,
-                simple_filter, multiple_filter;
+            var items, 
+                Model, View, Items,
+                or_filter, and_filter, single_filter;
 
-            animals = [
-                {id:1, animal_type: 'cat', size: 'big',   name: 'Marta'},
-                {id:2, animal_type: 'cat', size: 'small', name: 'Neliya'},
-                {id:3, animal_type: 'cat', size: 'small', name: 'Marusya'},
-                {id:4, animal_type: 'dog', size: 'small', name: 'Beem'},
-                {id:5, animal_type: 'dog', size: 'big',   name: 'Boom'},
-                {id:6, animal_type: 'dog', size: 'big',   name: 'Perl'}
+            items = [
+                {id:1, item_class: 'circle', size: 'big',   color: 'red'},
+                {id:2, item_class: 'circle', size: 'small', color: 'green'},
+                {id:3, item_class: 'square', size: 'small', color: 'blue'},
+                {id:4, item_class: 'square', size: 'small', color: 'yellow'},
+                {id:5, item_class: 'circle', size: 'small', color: 'orange'},
+                {id:6, item_class: 'circle', size: 'big',   color: 'green'}
             ];
 
-            AnimalModel = Backbone.Model.extend({
-                as_html: function () {
-                    return _.template('<%= animal_type %><br><%= size %> <%= name %>', this.toJSON())
-                }
+            Model = Backbone.Model.extend({});
+
+            Items = Backbone.Collection.extend({
+                model: Model
             });
 
-            Animals = Backbone.Collection.extend({
-                model: AnimalModel
-            });
-
-            AnimalView = Backbone.View.extend({
+            View = Backbone.View.extend({
                 className: 'item',
                 tagName: 'div',
 
+                _apply_cls: function () {
+                    _.each(['item_class', 'size', 'color'], function (attr) {
+                        this.$el.addClass(this.model.get(attr));
+                    }, this);
+                },
+
                 render: function () {
-                    this.$el.html(this.model.as_html());
+                    this._apply_cls();
+                    this.$el.html(this.model.get('item_class'));
                     return this;
                 }
             });
 
-            filter = new Backbone.Filter({
-                match_any       : false,
+            or_filter = new Backbone.Filter({
+                match_any       : true,
                 single_select   : false,
                 control_el      : $('#controls'),
                 collection_el   : $('#items'),
-                collection      : new Animals(animals),
-                itemView        : AnimalView
+                collection      : new Items(items),
+                itemView        : View
+            });
+
+            and_filter = new Backbone.Filter({
+                match_any       : false,
+                single_select   : false,
+                control_el      : $('#controls_two'),
+                collection_el   : $('#items_two'),
+                collection      : new Items(items),
+                itemView        : View
+            });
+
+            single_filter = new Backbone.Filter({
+                single_select   : true,
+                control_el      : $('#controls_three'),
+                collection_el   : $('#items_three'),
+                collection      : new Items(items),
+                itemView        : View
             });
         }());
     </script>

@@ -21,7 +21,7 @@
 
             control_view: new control_view({
                 el          : options.control_el,
-                match_any  : options.match_any,
+                match_any   : options.match_any,
                 collection  : options.collection 
             })
         }
@@ -76,6 +76,12 @@
                 delete this.collection.ff;
         },
 
+        _reset: function () {
+            this.remove_active(this.$el.find('a'));
+            this.filter_params = {};
+            delete this.collection.ff;
+        },
+
         _select: function (fname, value) {
             var self = this;
 
@@ -88,7 +94,6 @@
                     }, this);
                 }
             }
-
         },
 
         select: function (e) {
@@ -99,8 +104,10 @@
             if (this.is_active($el)) {
                 this.remove_active($el);
                 this._deselect(params[0], params[1]);
+            } else if (params[0] === 'reset') {
+                this._reset();
             } else {
-                this.set_active($el)
+                this.set_active($el);
                 this._select(params[0], params[1]);
             }
 
@@ -115,8 +122,7 @@
             var $el = $(e.target);
 
             if (!this.is_active($el)) {
-                this.filter_params = {}
-                this.remove_active(this.$el.find('a'));
+                this._reset();
             }
 
             return Filter.MultipleSelectControlView.prototype.select.call(this, e);
